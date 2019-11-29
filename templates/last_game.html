@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <h1> Last_game </h1><br>
+</head>
+ 
+<body>
+
+  <br>
+  <div>
+      {% for result in results %}
+        <article>
+          <a href="{{ url_for('/log_team_list') }}"> {{result.team_id}}</a>
+          <p> {{result.abbreviation}} </p>
+          <p> {{result.nickname}} </p>
+          <p> {{result.city}} </p>
+        </article>
+        {% endfor %}
+  </div>
+  <br>
+
+   
+</body>
+</html>
