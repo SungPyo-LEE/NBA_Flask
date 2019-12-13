@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <h1> Teams </h1><br>
+</head>
+ 
+<body>
+
+  <br>
+  <div>
+      {% for result in results %}
+        <article>
+          <a href="{{abbrev}}/{{result.game_id}}"> {{result.game_id}}</a>
+          <p> {{result.game_date}} </p>
+          <p> {{result.game_team}} </p>
+        </article>
+        {% endfor %}
+  </div>
+  <br>
+
+</body>
+</html>

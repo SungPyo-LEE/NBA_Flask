@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <h1> Last_game </h1><br>
+</head>
+ 
+<body>
+
+  <br>
+  <div>
+      {% for result in results %}
+        <article>
+          <a href="/game_log/{{result.abbrev}}"> {{result.team_name}}</a>
+          <p> {{result.abbrev}} </p>
+        </article>
+        {% endfor %}
+  </div>
+  <br>
+
+</body>
+</html>
