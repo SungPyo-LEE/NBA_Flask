@@ -1,10 +1,5 @@
 from flask import request, jsonify, render_template, Flask, send_file, make_response
 from functools import wraps
-from nba_api.stats.endpoints import BoxScorePlayerTrackV2
-from nba_api.stats.static import teams
-from nba_api.stats.endpoints import TeamGameLog
-import json
-import pandas as pd
 
 #get_graph_view
 import matplotlib
@@ -49,23 +44,27 @@ def create_endpoints(app,services):
         return render_template('OKC_game_id.html', results=games_list, abbrev=abbrev)
 
     @app.route('/game_log/<string:abbrev>/<string:game_id>', methods=['GET'])
+    @nocache
     def team_game_log(abbrev,game_id):
         tracker=team_service.get_game_log(game_id)
         tables=[tracker.to_html(classes='female')]
-        return render_template('last_game_dataframe.html',title='Last game ON Portland', tables=tables, titles='saxycow')
+        return render_template('last_game_dataframe.html',title='Last game ON Portland', tables=tables, titles='saxycow',
+            abbrev=abbrev,game_id=game_id)
 
     ##view_function
-    @app.route('/game_log/<string:abbrev>/<string:game_id>/pass')
+    @app.route('/game_log/<string:abbrev>/<string:game_id>/<string:stat>')
     @nocache
-    def fig(abbrev,game_id):
+    def fig(abbrev,game_id,stat):
         last_game_tracker=team_service.get_game_log(game_id)
-        plt.rcParams["figure.figsize"] = (10,4)
+        plt.rcParams["figure.figsize"] = (20,10)
         plt.rcParams['lines.linewidth'] = 2
         plt.rcParams['lines.color'] = 'r'
         plt.rcParams['axes.grid'] = True
-        y=list(last_game_tracker["PASS"])
+        y=list(last_game_tracker[stat])
         x=list(last_game_tracker["PLAYER_NAME"])
-        plt.bar(x, y,  color="blue")
+        plt.bar(x, y)
+        plt.xlabel('Player_name', fontsize=18)
+        plt.xticks(x, x, fontsize=15,rotation=45)
         img = BytesIO()
         plt.savefig(img, format='png', dpi=300)
         img.seek(0)## object를 읽었기 때문에 처음으로 돌아가줌

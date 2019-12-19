@@ -3,6 +3,12 @@
 <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
 <div class=page>
   <h1>Game_date</h1>
+  <button onClick="location.href='{{game_id}}/PASS'"> pass In game </button>    
+  <button onClick="location.href='{{game_id}}/AST'"> assist In game </button>    
+  <button onClick="location.href='{{game_id}}/SPD'"> speed In game </button>    
+  <button onClick="location.href='{{game_id}}/DIST'"> Distance In game </button>   
+  <button onClick="location.href='{{game_id}}/ORBC'"> Offensive_rebound In game </button>         
+  <button onClick="location.href='{{game_id}}/DRBC'"> Defensive_rebound In game </button>
   {% for table in tables %}
     <h2>{{titles[loop.index]}}</h2>
     {{ table|safe }}
